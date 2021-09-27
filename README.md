@@ -1,5 +1,6 @@
-Scanner
-======
+# Scanner
+[![Code Coverage](https://codecov.io/gh/vinogradsoft/scanner/branch/master/graph/badge.svg)](https://codecov.io/gh/vinogradsoft/scanner)
+
 Библиотека для обхода деревьев. 
 
 Установка
