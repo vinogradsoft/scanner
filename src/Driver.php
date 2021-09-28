@@ -40,6 +40,11 @@ interface Driver
     public function next();
 
     /**
+     * @return NodeFactory
+     */
+    public function getNodeFactory(): NodeFactory;
+
+    /**
      *
      */
     public function beforeSearch(): void;
