@@ -5,11 +5,6 @@ namespace Vinograd\Scanner;
 interface NodeFactory
 {
     /**
-     * @param array $supports
-     */
-    public function needSupportsOf(array $supports): void;
-
-    /**
      * @param $detect
      * @param $found
      * @return Node

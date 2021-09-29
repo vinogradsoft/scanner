@@ -9,11 +9,6 @@ use Vinograd\Scanner\NodeFactory;
 class DummyNodeFactory implements NodeFactory
 {
 
-    public function needSupportsOf(array $supports): void
-    {
-
-    }
-
     public function createNode($detect, $found): Node
     {
         return $found;
