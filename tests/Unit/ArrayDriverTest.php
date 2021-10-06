@@ -9,26 +9,9 @@ use PHPUnit\Framework\TestCase;
 class ArrayDriverTest extends TestCase
 {
 
-    public function testConstruct()
-    {
-        $arrayDriver = new ArrayDriver($nodeFactory = new DummyNodeFactory());
-        $reflection = new \ReflectionObject($arrayDriver);
-        $property = $reflection->getProperty('nodeFactory');
-        $property->setAccessible(true);
-        $objectValue = $property->getValue($arrayDriver);
-        self::assertSame($objectValue, $nodeFactory);
-    }
-
-    public function testGetNodeFactory()
-    {
-        $arrayDriver = new ArrayDriver($nodeFactory = new DummyNodeFactory());
-        $factory = $arrayDriver->getNodeFactory();
-        self::assertSame($factory, $nodeFactory);
-    }
-
     public function testIsLeaf()
     {
-        $arrayDriver = new ArrayDriver(new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         self::assertTrue($arrayDriver->isLeaf([5]));
         self::assertTrue($arrayDriver->isLeaf(['string']));
         self::assertFalse($arrayDriver->isLeaf([
@@ -38,7 +21,7 @@ class ArrayDriverTest extends TestCase
 
     public function testIsLeafWithSnap()
     {
-        $arrayDriver = new ArrayDriver(new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         $arrayDriver->isLeaf([5]);
         $reflection = new \ReflectionObject($arrayDriver);
         $property = $reflection->getProperty('dataForFilter');
@@ -49,7 +32,7 @@ class ArrayDriverTest extends TestCase
 
     public function testNormalise()
     {
-        $arrayDriver = new ArrayDriver(new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         $result = $arrayDriver->normalise($control = ['value']);
         $result2 = $arrayDriver->normalise($control2 = 'string');
         self::assertEquals($result, $control);
@@ -58,7 +41,7 @@ class ArrayDriverTest extends TestCase
 
     public function testGetDataFotFilter()
     {
-        $arrayDriver = new ArrayDriver(new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         $arrayDriver->isLeaf([5]);
         self::assertEquals($arrayDriver->getDataForFilter(), [0 => 5]);
         $arrayDriver->isLeaf([[5]]);
@@ -67,7 +50,7 @@ class ArrayDriverTest extends TestCase
 
     public function testParse()
     {
-        $arrayDriver = new ArrayDriver(new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         $control = [
             [0 => 'zero'],
             [1 => 'zero'],
@@ -104,14 +87,8 @@ class ArrayDriverTest extends TestCase
 
     public function testInstallDependencyContext()
     {
-        $arrayDriver = new ArrayDriver($factory = new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         $arrayDriver->beforeSearch();
-
-        $reflection = new \ReflectionObject($arrayDriver);
-        $property = $reflection->getProperty('nodeFactory');
-        $property->setAccessible(true);
-        $objectValue = $property->getValue($arrayDriver);
-        self::assertSame($objectValue, $factory);
 
         $reflection = new \ReflectionObject($arrayDriver);
         $property = $reflection->getProperty('dataForFilter');
@@ -122,14 +99,8 @@ class ArrayDriverTest extends TestCase
 
     public function testSetDetect()
     {
-        $arrayDriver = new ArrayDriver($factory = new DummyNodeFactory());
+        $arrayDriver = new ArrayDriver();
         $arrayDriver->setDetect(['value']);
-
-        $reflection = new \ReflectionObject($arrayDriver);
-        $property = $reflection->getProperty('nodeFactory');
-        $property->setAccessible(true);
-        $objectValue = $property->getValue($arrayDriver);
-        self::assertSame($objectValue, $factory);
 
         $reflection = new \ReflectionObject($arrayDriver);
         $property = $reflection->getProperty('dataForFilter');

@@ -24,7 +24,7 @@ class BreadthStrategyWithStopTest extends StrategyCase
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new BreadthStrategy();
         $this->factory = new DummyNodeFactory();
-        $this->driver = new ArrayDriver($this->factory);
+        $this->driver = new ArrayDriver();
     }
 
     /**
@@ -33,7 +33,7 @@ class BreadthStrategyWithStopTest extends StrategyCase
     public function testDetect($array)
     {
         $verifier = new Verifier();
-        $this->strategy->detect($this->detect = $array, $this->driver, $verifier, $verifier, $this->provider);
+        $this->strategy->detect($this->detect = $array, $this->driver, $this->factory, $verifier, $verifier, $this->provider);
     }
 
     public function getCase()

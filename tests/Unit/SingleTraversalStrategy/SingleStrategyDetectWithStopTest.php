@@ -22,7 +22,7 @@ class SingleStrategyDetectWithStopTest extends StrategyCase
     {
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new SingleStrategy();
-        $this->driver = new ArrayDriver(new DummyNodeFactory());
+        $this->driver = new ArrayDriver();
     }
 
     /**
@@ -32,7 +32,7 @@ class SingleStrategyDetectWithStopTest extends StrategyCase
     {
         $this->found = $found;
         $verifier = new Verifier();
-        $this->strategy->detect( $array, $this->driver, $verifier, $verifier,$this->provider);
+        $this->strategy->detect( $array, $this->driver,new DummyNodeFactory(), $verifier, $verifier,$this->provider);
     }
 
     public function getCase()

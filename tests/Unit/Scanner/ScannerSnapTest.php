@@ -8,6 +8,7 @@ use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\Driver;
 use Vinograd\Scanner\Exception\ConfigurationException;
+use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Scanner;
 use PHPUnit\Framework\TestCase;
 use Vinograd\Scanner\SingleStrategy;
@@ -50,6 +51,12 @@ class ScannerSnapTest extends TestCase
         $property->setAccessible(true);
         $objectValue = $property->getValue($scanner);
         self::assertEmpty($objectValue);
+
+        $reflection = new \ReflectionObject($scanner);
+        $property = $reflection->getProperty('nodeFactory');
+        $property->setAccessible(true);
+        $objectValue = $property->getValue($scanner);
+        self::assertEmpty($objectValue);
     }
 
     public function testSetStrategy()
@@ -79,8 +86,15 @@ class ScannerSnapTest extends TestCase
     public function testSetDriver()
     {
         $scanner = new Scanner();
-        $scanner->setDriver($driver = new ArrayDriver(new DummyNodeFactory()));
+        $scanner->setDriver($driver = new ArrayDriver());
         self::assertSame($driver, $scanner->getDriver());
+    }
+
+    public function testGetNodeFactory()
+    {
+        $scanner = new Scanner();
+        $scanner->setNodeFactory($nodeFactory = $this->getMockForAbstractClass(NodeFactory::class));
+        self::assertSame($nodeFactory, $scanner->getNodeFactory());
     }
 
     public function testSearchNoDriver()
@@ -107,6 +121,16 @@ class ScannerSnapTest extends TestCase
         $scanner = new Scanner();
         $scanner->setDriver($this->getMockForAbstractClass(Driver::class));
         $scanner->setStrategy(new SingleStrategy());
+        $scanner->search([]);
+    }
+
+    public function testSearchNoNodeFactory()
+    {
+        $this->expectException(ConfigurationException::class);
+        $scanner = new Scanner();
+        $scanner->setDriver($this->getMockForAbstractClass(Driver::class));
+        $scanner->setStrategy(new SingleStrategy());
+        $scanner->setVisitor(new DummyVisitor());
         $scanner->search([]);
     }
 }

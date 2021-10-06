@@ -26,7 +26,7 @@ class SingleStrategyDetectTest extends StrategyCase
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new SingleStrategy();
         $this->factory = new DummyNodeFactory();
-        $this->driver = new ArrayDriver($this->factory);
+        $this->driver = new ArrayDriver();
     }
 
     /**
@@ -37,7 +37,7 @@ class SingleStrategyDetectTest extends StrategyCase
         $this->array = $array;
         $this->except = $except;
         $verifier = new Verifier();
-        $this->strategy->detect($this->detect = $array, $this->driver, $verifier, $verifier,$this->provider);
+        $this->strategy->detect($this->detect = $array, $this->driver, $this->factory, $verifier, $verifier, $this->provider);
     }
 
     public function getCase()

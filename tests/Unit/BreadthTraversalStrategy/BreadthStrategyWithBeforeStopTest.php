@@ -19,7 +19,7 @@ class BreadthStrategyWithBeforeStopTest extends StrategyCase
         $verifier = new Verifier();
         $provider = new TestCaseProviderVisitor($this);
         $strategy = new BreadthStrategy();
-        $driver = new ArrayDriver(new DummyNodeFactory());
+        $driver = new ArrayDriver();
 
         $strategy->setStop(true);
         $strategy->detect([
@@ -42,7 +42,7 @@ class BreadthStrategyWithBeforeStopTest extends StrategyCase
                 ],
                 4
             ],
-        ], $driver, $verifier, $verifier, $provider);
+        ], $driver, new DummyNodeFactory(), $verifier, $verifier, $provider);
 
         self::assertTrue(true);
     }

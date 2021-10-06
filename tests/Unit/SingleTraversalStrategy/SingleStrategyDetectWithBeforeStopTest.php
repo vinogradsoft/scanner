@@ -18,7 +18,7 @@ class SingleStrategyDetectWithBeforeStopTest extends StrategyCase
     {
         $provider = new TestCaseProviderVisitor($this);
         $strategy = new SingleStrategy();
-        $driver = new ArrayDriver(new DummyNodeFactory());
+        $driver = new ArrayDriver();
         $verifier = new Verifier();
 
         $strategy->setStop(true);
@@ -29,7 +29,7 @@ class SingleStrategyDetectWithBeforeStopTest extends StrategyCase
             'key2' => 'value2',
             'key3' => [4.5, 4],
             'key4' => [1, 3, 2]
-        ], $driver, $verifier, $verifier, $provider);
+        ], $driver,new DummyNodeFactory(), $verifier, $verifier, $provider);
 
         self::assertTrue(true);
     }

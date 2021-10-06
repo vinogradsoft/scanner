@@ -26,7 +26,7 @@ class SingleStrategyDetectSnapTest extends StrategyCase
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new SingleStrategy();
         $this->factory = new DummyNodeFactory();
-        $this->driver = new ArrayDriver($this->factory);
+        $this->driver = new ArrayDriver();
         $this->verifier1 = new Verifier();
         $this->verifier2 = new Verifier();
     }
@@ -37,7 +37,7 @@ class SingleStrategyDetectSnapTest extends StrategyCase
     public function testDetect($array)
     {
         $this->detect = $array;
-        $this->strategy->detect($array, $this->driver, $this->verifier1, $this->verifier2, $this->provider);
+        $this->strategy->detect($array, $this->driver, $this->factory, $this->verifier1, $this->verifier2, $this->provider);
     }
 
     public function getCase()

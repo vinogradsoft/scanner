@@ -29,7 +29,7 @@ class SearchWithLeafFilterTest extends StrategyCase
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new BreadthStrategy();;
         $this->factory = new DummyNodeFactory();
-        $this->driver = new ArrayDriver($this->factory);
+        $this->driver = new ArrayDriver();
     }
 
     /**
@@ -41,6 +41,7 @@ class SearchWithLeafFilterTest extends StrategyCase
         $scanner->setStrategy($this->strategy);
         $scanner->setVisitor($this->provider);
         $scanner->setDriver($this->driver);
+        $scanner->setNodeFactory($this->factory);
 
         $scanner->addLeafFilter(new class() implements Filter {
 

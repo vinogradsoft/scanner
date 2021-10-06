@@ -27,12 +27,13 @@ class SearchWithNodeFilterTest extends StrategyCase
     {
         $provider = new TestCaseProviderVisitor($this);
         $strategy = new BreadthStrategy();
-        $driver = new ArrayDriver(new DummyNodeFactory());
+        $driver = new ArrayDriver();
 
         $scanner = new Scanner();
         $scanner->setStrategy($strategy);
         $scanner->setVisitor($provider);
         $scanner->setDriver($driver);
+        $scanner->setNodeFactory(new DummyNodeFactory());
 
         $scanner->addNodeFilter(new class() implements Filter {
 

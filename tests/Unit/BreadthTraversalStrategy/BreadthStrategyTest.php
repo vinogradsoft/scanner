@@ -29,7 +29,7 @@ class BreadthStrategyTest extends StrategyCase
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new BreadthStrategy();;
         $this->factory = new DummyNodeFactory();
-        $this->driver = new ArrayDriver($this->factory);
+        $this->driver = new ArrayDriver();
     }
 
     /**
@@ -38,7 +38,7 @@ class BreadthStrategyTest extends StrategyCase
     public function testDetect($array, $expectedLeaf, $expectedNodes)
     {
         $verifier = new Verifier();
-        $this->strategy->detect($this->detect = $array, $this->driver, $verifier, $verifier, $this->provider);
+        $this->strategy->detect($this->detect = $array, $this->driver, $this->factory, $verifier, $verifier, $this->provider);
         self::assertEquals($this->leafCounter, count($expectedLeaf));
         self::assertEquals($this->nodeCounter, count($expectedNodes));
 
