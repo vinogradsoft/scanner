@@ -2,8 +2,6 @@
 
 namespace Vinograd\Scanner;
 
-use SplQueue;
-
 interface Driver
 {
     /**
@@ -38,11 +36,6 @@ interface Driver
      * @return mixed
      */
     public function next();
-
-    /**
-     * @return NodeFactory
-     */
-    public function getNodeFactory(): NodeFactory;
 
     /**
      *

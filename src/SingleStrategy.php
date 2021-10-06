@@ -5,19 +5,26 @@ namespace Vinograd\Scanner;
 class SingleStrategy extends AbstractTraversalStrategy
 {
     /**
-     * @param Visitor $visitor
      * @param mixed $detect
      * @param Driver $driver
+     * @param NodeFactory $nodeFactory
      * @param Verifier $leafVerifier
      * @param Verifier $nodeVerifier
+     * @param Visitor $visitor
      */
-    public function detect($detect, Driver $driver, Verifier $leafVerifier, Verifier $nodeVerifier, Visitor $visitor): void
+    public function detect(
+        $detect,
+        Driver $driver,
+        NodeFactory $nodeFactory,
+        Verifier $leafVerifier,
+        Verifier $nodeVerifier,
+        Visitor $visitor
+    ): void
     {
         if ($this->stop) {
             return;
         }
         $visitor->scanStarted($this, $detect);
-        $nodeFactory = $driver->getNodeFactory();
 
         $founds = $driver->parse($detect);
         $driver->setDetect($detect);

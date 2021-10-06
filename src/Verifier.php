@@ -19,6 +19,7 @@ class Verifier
         if (empty($this->initialChecker)) {
             $this->initialChecker = new BaseChecker($filter);
             $this->checker = $this->initialChecker;
+            return $this;
         }
         $this->checker = $this->checker->append(new BaseChecker($filter));
         return $this;

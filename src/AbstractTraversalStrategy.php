@@ -11,13 +11,15 @@ abstract class AbstractTraversalStrategy
     /**
      * @param mixed $detect
      * @param Driver $driver
+     * @param NodeFactory $nodeFactory
      * @param Verifier $leafVerifier
      * @param Verifier $nodeVerifier
      * @param Visitor $visitor
      */
     abstract public function detect(
-                 $detect,
-        Driver   $driver,
+        $detect,
+        Driver $driver,
+        NodeFactory $nodeFactory,
         Verifier $leafVerifier,
         Verifier $nodeVerifier,
         Visitor $visitor

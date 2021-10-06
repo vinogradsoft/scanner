@@ -22,6 +22,9 @@ class Scanner
     /** @var AbstractTraversalStrategy|null */
     protected $traversal = null;
 
+    /** @var NodeFactory */
+    protected $nodeFactory;
+
     public function __construct()
     {
         $this->leafVerifier = new Verifier();
@@ -52,6 +55,9 @@ class Scanner
         if (empty($this->visitor)) {
             throw new ConfigurationException('Visitor not installed.');
         }
+        if (empty($this->nodeFactory)) {
+            throw new ConfigurationException('NodeFactory not installed.');
+        }
     }
 
     /**
@@ -60,7 +66,23 @@ class Scanner
     protected function detect($detect): void
     {
         $detect = $this->driver->normalise($detect);
-        $this->traversal->detect($detect, $this->driver, $this->leafVerifier, $this->nodeVerifier, $this->visitor);
+        $this->traversal->detect($detect, $this->driver, $this->nodeFactory, $this->leafVerifier, $this->nodeVerifier, $this->visitor);
+    }
+
+    /**
+     * @return NodeFactory
+     */
+    public function getNodeFactory(): NodeFactory
+    {
+        return $this->nodeFactory;
+    }
+
+    /**
+     * @param NodeFactory $nodeFactory
+     */
+    public function setNodeFactory(NodeFactory $nodeFactory): void
+    {
+        $this->nodeFactory = $nodeFactory;
     }
 
     /**
@@ -87,12 +109,7 @@ class Scanner
      */
     public function setVisitor(Visitor $visitor): void
     {
-        if (empty($this->visitor)) {
-            $this->visitor = $visitor;
-            return;
-        }
-
-        if ($this->visitor->equals($visitor)) {
+        if ($this->visitor === $visitor) {
             return;
         }
         $this->visitor = $visitor;

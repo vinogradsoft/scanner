@@ -2,35 +2,14 @@
 
 namespace Vinograd\Scanner;
 
-use SplQueue;
-
 class ArrayDriver implements Driver
 {
-    /**  @var NodeFactory */
-    protected $nodeFactory;
 
     /** @var array */
     private $dataForFilter;
 
     /** @var array */
     private $next;
-
-    /**
-     * FileDriver constructor.
-     * @param NodeFactory $factory
-     */
-    public function __construct(NodeFactory $factory)
-    {
-        $this->nodeFactory = $factory;
-    }
-
-    /**
-     * @return NodeFactory
-     */
-    public function getNodeFactory(): NodeFactory
-    {
-        return $this->nodeFactory;
-    }
 
     /**
      * @param array $detect
@@ -100,7 +79,7 @@ class ArrayDriver implements Driver
     }
 
     /**
-     * @return array|mixed
+     * @return array
      */
     public function next()
     {
