@@ -1,6 +1,6 @@
 {
   "name": "vinogradsoft/scanner",
-  "description": "Сканер",
+  "description": "Tree Traversal Library.",
   "license": "MIT",
   "authors": [
     {
@@ -8,7 +8,7 @@
       "email": "cmk.cmyk@mail.ru"
     }
   ],
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
