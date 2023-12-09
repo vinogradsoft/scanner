@@ -10,13 +10,11 @@
 
 # What is Scanner?
 
-> 👉 Scanner is a framework for building systems for searching and processing data in hierarchical structures. It offers
+> 👉 Scanner is a skeleton for building systems for searching and processing data in hierarchical structures. It offers
 > two approaches to data analysis: the first, breadth-first analysis, looks at all levels of the tree in one pass, and
-> the
-> second, depth-first analysis, processes each level of the tree in turn, starting from the root. The main purpose of
-> this
-> tool is to automate the process of searching and processing the necessary tree elements. Scanner can be useful for
-> programmers working with hierarchical data and seeking to automate the process of processing such data.
+> the second, depth-first analysis, processes each level of the tree in turn, starting from the root. The main purpose
+> of this tool is to automate the process of searching and processing the necessary tree elements. Scanner can be useful
+> for programmers working with hierarchical data and seeking to automate the process of processing such data.
 
 ## Features
 
