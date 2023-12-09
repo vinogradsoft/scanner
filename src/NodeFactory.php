@@ -5,6 +5,7 @@ namespace Vinograd\Scanner;
 
 interface NodeFactory
 {
+
     /**
      * @param $detect
      * @param $found
@@ -18,4 +19,5 @@ interface NodeFactory
      * @return Leaf
      */
     public function createLeaf($detect, $found): Leaf;
+
 }

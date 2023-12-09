@@ -7,6 +7,7 @@ use SplQueue;
 
 class BreadthStrategy extends AbstractTraversalStrategy
 {
+
     /**
      * @param mixed $detect
      * @param Driver $driver
@@ -16,12 +17,12 @@ class BreadthStrategy extends AbstractTraversalStrategy
      * @param Visitor $visitor
      */
     public function detect(
-        $detect,
-        Driver $driver,
+        mixed       $detect,
+        Driver      $driver,
         NodeFactory $nodeFactory,
-        Verifier $leafVerifier,
-        Verifier $nodeVerifier,
-        Visitor $visitor
+        Verifier    $leafVerifier,
+        Verifier    $nodeVerifier,
+        Visitor     $visitor
     ): void
     {
         if ($this->stop) {
@@ -41,7 +42,7 @@ class BreadthStrategy extends AbstractTraversalStrategy
 
             $driver->setDetect($node);
 
-            foreach ($founds as $key => $found) {
+            foreach ($founds as $found) {
                 if ($this->stop) {
                     $visitor->scanCompleted($this, $nodeFactory, $node);
                     return;

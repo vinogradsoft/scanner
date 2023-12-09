@@ -34,8 +34,8 @@ class ArrayDriverTest extends TestCase
     public function testNormalise()
     {
         $arrayDriver = new ArrayDriver();
-        $result = $arrayDriver->normalise($control = ['value']);
-        $result2 = $arrayDriver->normalise($control2 = 'string');
+        $result = $arrayDriver->normalize($control = ['value']);
+        $result2 = $arrayDriver->normalize($control2 = 'string');
         self::assertEquals($result, $control);
         self::assertEquals($result2, [$control2]);
     }

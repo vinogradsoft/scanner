@@ -5,11 +5,10 @@ namespace Vinograd\Scanner;
 
 class Verifier
 {
-    /** @var Checker|null  */
-    private $initialChecker;
 
-    /** @var Checker|null  */
-    private $checker;
+    private Checker|null $initialChecker;
+
+    private Checker|null $checker;
 
     /**
      * @param Filter $filter
@@ -30,7 +29,7 @@ class Verifier
      * @param mixed $verifiable
      * @return bool
      */
-    public function can($verifiable): bool
+    public function can(mixed $verifiable): bool
     {
         if (empty($this->initialChecker)) {
             return true;
@@ -38,9 +37,13 @@ class Verifier
         return $this->initialChecker->can($verifiable);
     }
 
-    public function clear()
+    /**
+     * @return void
+     */
+    public function clear(): void
     {
         $this->initialChecker = null;
         $this->checker = null;
     }
+
 }

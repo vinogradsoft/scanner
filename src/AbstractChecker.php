@@ -5,8 +5,8 @@ namespace Vinograd\Scanner;
 
 abstract class AbstractChecker implements Checker
 {
-    /** @var Checker|null  */
-    protected $next = null;
+
+    protected Checker|null $next = null;
 
     /**
      * @param Checker $checker
@@ -19,10 +19,10 @@ abstract class AbstractChecker implements Checker
     }
 
     /**
-     * @param $node
+     * @param mixed $node
      * @return bool
      */
-    public function can($node): bool
+    public function can(mixed $node): bool
     {
         if ($this->next !== null) {
             return $this->next->can($node);

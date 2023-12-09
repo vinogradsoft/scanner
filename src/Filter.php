@@ -5,14 +5,17 @@ namespace Vinograd\Scanner;
 
 interface Filter
 {
-    /**
-     * @param $found
-     * @return bool
-     */
-    public function filter($found): bool;
 
     /**
-     * @param $config
+     * @param mixed $found
+     * @return bool
      */
-    public function setConfiguration($config): void;
+    public function filter(mixed $found): bool;
+
+    /**
+     * @param mixed $config
+     * @return void
+     */
+    public function setConfiguration(mixed $config): void;
+
 }
