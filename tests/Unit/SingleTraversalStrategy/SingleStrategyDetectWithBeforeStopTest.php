@@ -8,7 +8,6 @@ use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\SingleStrategy;
 use Vinograd\Scanner\Verifier;
 
@@ -30,7 +29,7 @@ class SingleStrategyDetectWithBeforeStopTest extends StrategyCase
             'key2' => 'value2',
             'key3' => [4.5, 4],
             'key4' => [1, 3, 2]
-        ], $driver,new DummyNodeFactory(), $verifier, $verifier, $provider);
+        ], $driver, $verifier, $verifier, $provider);
 
         self::assertTrue(true);
     }
@@ -40,17 +39,17 @@ class SingleStrategyDetectWithBeforeStopTest extends StrategyCase
         self::fail();
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
         self::fail();
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::fail();
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::fail();
     }

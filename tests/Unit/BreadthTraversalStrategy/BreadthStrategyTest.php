@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace Test\Unit\BreadthTraversalStrategy;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\BreadthStrategy;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Verifier;
 
 class BreadthStrategyTest extends StrategyCase
 {
     private $strategy;
     private $driver;
-    private $factory;
     private $detect;
 
     private $leafCounter = 0;
@@ -29,7 +26,6 @@ class BreadthStrategyTest extends StrategyCase
     {
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new BreadthStrategy();;
-        $this->factory = new DummyNodeFactory();
         $this->driver = new ArrayDriver();
     }
 
@@ -39,7 +35,7 @@ class BreadthStrategyTest extends StrategyCase
     public function testDetect($array, $expectedLeaf, $expectedNodes)
     {
         $verifier = new Verifier();
-        $this->strategy->detect($this->detect = $array, $this->driver, $this->factory, $verifier, $verifier, $this->provider);
+        $this->strategy->detect($this->detect = $array, $this->driver, $verifier, $verifier, $this->provider);
         self::assertEquals($this->leafCounter, count($expectedLeaf));
         self::assertEquals($this->nodeCounter, count($expectedNodes));
 
@@ -107,18 +103,18 @@ class BreadthStrategyTest extends StrategyCase
 
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
 
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         $this->leafCounter++;
         $this->leafLog [] = $found;
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
 
         $this->nodeCounter++;
@@ -129,7 +125,6 @@ class BreadthStrategyTest extends StrategyCase
     {
         $this->strategy = null;
         $this->driver = null;
-        $this->factory = null;
         $this->detect = null;
 
         $this->leafCounter = 0;

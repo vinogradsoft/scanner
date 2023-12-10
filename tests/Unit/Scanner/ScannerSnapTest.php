@@ -3,13 +3,11 @@ declare(strict_types=1);
 
 namespace Test\Unit\Scanner;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\DummyVisitor;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\Driver;
 use Vinograd\Scanner\Exception\ConfigurationException;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Scanner;
 use PHPUnit\Framework\TestCase;
 use Vinograd\Scanner\SingleStrategy;
@@ -53,11 +51,6 @@ class ScannerSnapTest extends TestCase
         $objectValue = $property->getValue($scanner);
         self::assertEmpty($objectValue);
 
-        $reflection = new \ReflectionObject($scanner);
-        $property = $reflection->getProperty('nodeFactory');
-        $property->setAccessible(true);
-        $objectValue = $property->getValue($scanner);
-        self::assertEmpty($objectValue);
     }
 
     public function testSetStrategy()
@@ -91,20 +84,13 @@ class ScannerSnapTest extends TestCase
         self::assertSame($driver, $scanner->getDriver());
     }
 
-    public function testGetNodeFactory()
-    {
-        $scanner = new Scanner();
-        $scanner->setNodeFactory($nodeFactory = $this->getMockForAbstractClass(NodeFactory::class));
-        self::assertSame($nodeFactory, $scanner->getNodeFactory());
-    }
-
     public function testSearchNoDriver()
     {
         $this->expectException(ConfigurationException::class);
         $scanner = new Scanner();
         $scanner->setStrategy(new SingleStrategy());
         $scanner->setVisitor(new DummyVisitor());
-        $scanner->search([]);
+        $scanner->traverse([]);
     }
 
     public function testSearchNoStrategy()
@@ -113,7 +99,7 @@ class ScannerSnapTest extends TestCase
         $scanner = new Scanner();
         $scanner->setDriver($this->getMockForAbstractClass(Driver::class));
         $scanner->setVisitor(new DummyVisitor());
-        $scanner->search([]);
+        $scanner->traverse([]);
     }
 
     public function testSearchNoVisitor()
@@ -122,16 +108,7 @@ class ScannerSnapTest extends TestCase
         $scanner = new Scanner();
         $scanner->setDriver($this->getMockForAbstractClass(Driver::class));
         $scanner->setStrategy(new SingleStrategy());
-        $scanner->search([]);
+        $scanner->traverse([]);
     }
 
-    public function testSearchNoNodeFactory()
-    {
-        $this->expectException(ConfigurationException::class);
-        $scanner = new Scanner();
-        $scanner->setDriver($this->getMockForAbstractClass(Driver::class));
-        $scanner->setStrategy(new SingleStrategy());
-        $scanner->setVisitor(new DummyVisitor());
-        $scanner->search([]);
-    }
 }

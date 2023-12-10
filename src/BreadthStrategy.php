@@ -7,21 +7,20 @@ use SplQueue;
 
 class BreadthStrategy extends AbstractTraversalStrategy
 {
+
     /**
-     * @param mixed $detect
+     * @param mixed $node
      * @param Driver $driver
-     * @param NodeFactory $nodeFactory
      * @param Verifier $leafVerifier
      * @param Verifier $nodeVerifier
      * @param Visitor $visitor
      */
     public function detect(
-        $detect,
-        Driver $driver,
-        NodeFactory $nodeFactory,
-        Verifier $leafVerifier,
-        Verifier $nodeVerifier,
-        Visitor $visitor
+        mixed       $node,
+        Driver      $driver,
+        Verifier    $leafVerifier,
+        Verifier    $nodeVerifier,
+        Visitor     $visitor
     ): void
     {
         if ($this->stop) {
@@ -29,37 +28,37 @@ class BreadthStrategy extends AbstractTraversalStrategy
         }
 
         $queue = new SplQueue();
-        $queue->enqueue($detect);
+        $queue->enqueue($node);
 
         $completeFound = null;
 
-        $visitor->scanStarted($this, $detect);
+        $visitor->scanStarted($this, $node);
 
         while ($queue->count() > 0) {
-            $completeFound = $node = $queue->dequeue();
-            $founds = $driver->parse($node);
+            $completeFound = $element = $queue->dequeue();
+            $founds = $driver->parse($element);
 
-            $driver->setDetect($node);
+            $driver->setDetect($element);
 
-            foreach ($founds as $key => $found) {
+            foreach ($founds as $found) {
                 if ($this->stop) {
-                    $visitor->scanCompleted($this, $nodeFactory, $node);
+                    $visitor->scanCompleted($this, $element);
                     return;
                 }
 
                 if ($driver->isLeaf($found)) {
                     if ($leafVerifier->can($driver->getDataForFilter())) {
-                        $visitor->visitLeaf($this, $nodeFactory, $node, $found);
+                        $visitor->visitLeaf($this, $element, $found);
                     }
                 } else {
                     if ($nodeVerifier->can($driver->getDataForFilter())) {
-                        $visitor->visitNode($this, $nodeFactory, $node, $found);
+                        $visitor->visitNode($this, $element, $found);
                     }
                     $queue->enqueue($driver->next());
                 }
             }
         }
-        $visitor->scanCompleted($this, $nodeFactory, $completeFound);
+        $visitor->scanCompleted($this, $completeFound);
     }
 
 }

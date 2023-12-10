@@ -5,7 +5,6 @@ namespace Test\Cases\Dummy;
 
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Visitor;
 
 class TestCaseProviderVisitor implements Visitor
@@ -32,36 +31,36 @@ class TestCaseProviderVisitor implements Visitor
 
     /**
      * @param AbstractTraversalStrategy $scanStrategy
-     * @param NodeFactory $factory
      * @param $detect
+     * @return void
      */
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
-        $this->testCase->scanCompleted($scanStrategy, $factory, $detect);
+        $this->testCase->scanCompleted($scanStrategy, $detect);
     }
 
     /**
      * @param AbstractTraversalStrategy $scanStrategy
-     * @param NodeFactory $factory
-     * @param $detect
-     * @param $found
-     * @param null $data
+     * @param $parentNode
+     * @param $currentElement
+     * @param $data
+     * @return void
      */
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $parentNode, $currentElement, $data = null): void
     {
-        $this->testCase->visitLeaf($scanStrategy, $factory, $detect, $found, $data);
+        $this->testCase->visitLeaf($scanStrategy, $parentNode, $currentElement, $data);
     }
 
     /**
      * @param AbstractTraversalStrategy $scanStrategy
-     * @param NodeFactory $factory
-     * @param $detect
-     * @param $found
-     * @param null $data
+     * @param $parentNode
+     * @param $currentNode
+     * @param $data
+     * @return void
      */
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $parentNode, $currentNode, $data = null): void
     {
-        $this->testCase->visitNode($scanStrategy, $factory, $detect, $found, $data);
+        $this->testCase->visitNode($scanStrategy, $parentNode, $currentNode, $data);
     }
 
     public function equals(Visitor $visitor): bool

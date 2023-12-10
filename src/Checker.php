@@ -5,6 +5,7 @@ namespace Vinograd\Scanner;
 
 interface Checker
 {
+
     /**
      * @param Checker $checker
      * @return Checker
@@ -12,8 +13,9 @@ interface Checker
     public function append(Checker $checker): Checker;
 
     /**
-     * @param $found
+     * @param mixed $element
      * @return bool
      */
-    public function can($found): bool;
+    public function can(mixed $element): bool;
+
 }

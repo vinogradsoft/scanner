@@ -1,14 +1,23 @@
 {
   "name": "vinogradsoft/scanner",
-  "description": "Tree Traversal Library.",
+  "description": "Vinograd is a powerful library for processing hierarchical data. It provides an intuitive API for traversing trees in breadth-first and depth-first orders. Developers can also implement their own visitor patterns to process specific nodes or leaves. ",
   "license": "MIT",
+  "keywords": [
+    "Vinograd Scanner",
+    "Btree scanner",
+    "Data scanner",
+    "Tree scanner",
+    "Breadth first scanner",
+    "Depth first scanner"
+  ],
   "authors": [
     {
-      "name": "vinograd",
-      "email": "cmk.cmyk@mail.ru"
+      "name": "Grigor",
+      "email": "cmk.cmyk@mail.ru",
+      "role": "Founder and project lead"
     }
   ],
-  "version": "1.0.2",
+  "version": "2.0.0",
   "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
@@ -23,10 +32,10 @@
     }
   },
   "require": {
-    "php": ">=7.2"
+    "php": ">=8.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "^8.5",
+    "phpunit/phpunit": "^9.6",
     "overtrue/phplint": "^2.0"
   },
   "repositories": [

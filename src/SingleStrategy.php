@@ -5,48 +5,47 @@ namespace Vinograd\Scanner;
 
 class SingleStrategy extends AbstractTraversalStrategy
 {
+
     /**
-     * @param mixed $detect
+     * @param mixed $node
      * @param Driver $driver
-     * @param NodeFactory $nodeFactory
      * @param Verifier $leafVerifier
      * @param Verifier $nodeVerifier
      * @param Visitor $visitor
      */
     public function detect(
-        $detect,
-        Driver $driver,
-        NodeFactory $nodeFactory,
+        mixed    $node,
+        Driver   $driver,
         Verifier $leafVerifier,
         Verifier $nodeVerifier,
-        Visitor $visitor
+        Visitor  $visitor
     ): void
     {
         if ($this->stop) {
             return;
         }
-        $visitor->scanStarted($this, $detect);
+        $visitor->scanStarted($this, $node);
 
-        $founds = $driver->parse($detect);
-        $driver->setDetect($detect);
+        $founds = $driver->parse($node);
+        $driver->setDetect($node);
 
         foreach ($founds as $found) {
             if ($this->stop) {
-                $visitor->scanCompleted($this, $nodeFactory, $detect);
+                $visitor->scanCompleted($this, $node);
                 return;
             }
             if ($driver->isLeaf($found)) {
                 if ($leafVerifier->can($driver->getDataForFilter())) {
-                    $visitor->visitLeaf($this, $nodeFactory, $detect, $found);
+                    $visitor->visitLeaf($this, $node, $found);
                 }
             } else {
                 if ($nodeVerifier->can($driver->getDataForFilter())) {
-                    $visitor->visitNode($this, $nodeFactory, $detect, $found);
+                    $visitor->visitNode($this, $node, $found);
                 }
             }
         }
 
-        $visitor->scanCompleted($this, $nodeFactory, $detect);
+        $visitor->scanCompleted($this, $node);
     }
 
 }

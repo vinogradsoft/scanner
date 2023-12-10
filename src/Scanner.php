@@ -8,23 +8,15 @@ use Vinograd\Scanner\Exception\ConfigurationException;
 class Scanner
 {
 
-    /** @var Driver|null */
-    private $driver = null;
+    private Driver|null $driver = null;
 
-    /** @var Verifier */
-    private $leafVerifier;
+    private Verifier $leafVerifier;
 
-    /** @var Verifier */
-    private $nodeVerifier;
+    private Verifier $nodeVerifier;
 
-    /** @var Visitor|null */
-    protected $visitor = null;
+    protected Visitor|null $visitor = null;
 
-    /** @var AbstractTraversalStrategy|null */
-    protected $traversal = null;
-
-    /** @var NodeFactory */
-    protected $nodeFactory;
+    protected AbstractTraversalStrategy|null $traversal = null;
 
     public function __construct()
     {
@@ -33,17 +25,18 @@ class Scanner
     }
 
     /**
-     * @param mixed $source
+     * @param mixed $rootNode
+     * @return void
      */
-    public function search($source): void
+    public function traverse(mixed $rootNode): void
     {
         $this->validate();
         $this->driver->beforeSearch();
-        $this->detect($source);
+        $this->detect($rootNode);
     }
 
     /**
-     * Tool validation
+     * @return void
      */
     protected function validate(): void
     {
@@ -56,38 +49,21 @@ class Scanner
         if (empty($this->visitor)) {
             throw new ConfigurationException('Visitor not installed.');
         }
-        if (empty($this->nodeFactory)) {
-            throw new ConfigurationException('NodeFactory not installed.');
-        }
     }
 
     /**
-     * @param $detect
+     * @param mixed $detect
+     * @return void
      */
-    protected function detect($detect): void
+    protected function detect(mixed $detect): void
     {
-        $detect = $this->driver->normalise($detect);
-        $this->traversal->detect($detect, $this->driver, $this->nodeFactory, $this->leafVerifier, $this->nodeVerifier, $this->visitor);
-    }
-
-    /**
-     * @return NodeFactory
-     */
-    public function getNodeFactory(): NodeFactory
-    {
-        return $this->nodeFactory;
-    }
-
-    /**
-     * @param NodeFactory $nodeFactory
-     */
-    public function setNodeFactory(NodeFactory $nodeFactory): void
-    {
-        $this->nodeFactory = $nodeFactory;
+        $detect = $this->driver->normalize($detect);
+        $this->traversal->detect($detect, $this->driver, $this->leafVerifier, $this->nodeVerifier, $this->visitor);
     }
 
     /**
      * @param AbstractTraversalStrategy $strategy
+     * @return void
      */
     public function setStrategy(AbstractTraversalStrategy $strategy): void
     {
@@ -107,6 +83,7 @@ class Scanner
 
     /**
      * @param Visitor $visitor
+     * @return void
      */
     public function setVisitor(Visitor $visitor): void
     {
@@ -117,18 +94,24 @@ class Scanner
     }
 
     /**
-     * @return Visitor
+     * @return Visitor|null
      */
     public function getVisitor(): ?Visitor
     {
         return $this->visitor;
     }
 
+    /**
+     * @return void
+     */
     public function resetLeafFilters(): void
     {
         $this->leafVerifier->clear();
     }
 
+    /**
+     * @return void
+     */
     public function resetNodeFilters(): void
     {
         $this->nodeVerifier->clear();
@@ -136,6 +119,7 @@ class Scanner
 
     /**
      * @param Filter $filter
+     * @return void
      */
     public function addLeafFilter(Filter $filter): void
     {
@@ -144,6 +128,7 @@ class Scanner
 
     /**
      * @param Filter $filter
+     * @return void
      */
     public function addNodeFilter(Filter $filter): void
     {
@@ -160,6 +145,7 @@ class Scanner
 
     /**
      * @param Driver $driver
+     * @return void
      */
     public function setDriver(Driver $driver): void
     {

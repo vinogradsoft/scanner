@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace Test\Unit\Scanner;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\BreadthStrategy;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Scanner;
 
 class SearchTest extends StrategyCase
 {
     private $strategy;
     private $driver;
-    private $factory;
 
     private $leafCounter = 0;
     private $nodeCounter = 0;
@@ -28,7 +25,6 @@ class SearchTest extends StrategyCase
     {
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new BreadthStrategy();;
-        $this->factory = new DummyNodeFactory();
         $this->driver = new ArrayDriver();
     }
 
@@ -41,8 +37,7 @@ class SearchTest extends StrategyCase
         $scanner->setStrategy($this->strategy);
         $scanner->setVisitor($this->provider);
         $scanner->setDriver($this->driver);
-        $scanner->setNodeFactory($this->factory);
-        $scanner->search($array);
+        $scanner->traverse($array);
 
         self::assertCount($this->leafCounter, $expectedLeaf);
         self::assertCount($this->nodeCounter, $expectedNodes);
@@ -111,18 +106,18 @@ class SearchTest extends StrategyCase
 
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
 
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         $this->leafCounter++;
         $this->leafLog [] = $found;
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
 
         $this->nodeCounter++;

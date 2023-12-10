@@ -5,11 +5,10 @@ namespace Vinograd\Scanner;
 
 class BaseChecker extends AbstractChecker
 {
-    /** @var Filter  */
-    private $filter;
+
+    private Filter $filter;
 
     /**
-     * BaseChecker constructor.
      * @param Filter $filter
      */
     public function __construct(Filter $filter)
@@ -18,12 +17,12 @@ class BaseChecker extends AbstractChecker
     }
 
     /**
-     * @param $node
+     * @param mixed $element
      * @return bool
      */
-    public function can($node): bool
+    public function can(mixed $element): bool
     {
-        return $this->filter->filter($node) ? parent::can($node) : false;
+        return $this->filter->filter($element) ? parent::can($element) : false;
     }
 
 }

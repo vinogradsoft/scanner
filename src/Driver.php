@@ -5,41 +5,44 @@ namespace Vinograd\Scanner;
 
 interface Driver
 {
+
     /**
-     * @param $source
+     * @param mixed $source
      * @return array
      */
-    public function parse($source): array;
+    public function parse(mixed $source): array;
 
     /**
-     * @param $source
+     * @param mixed $source
      * @return mixed
      */
-    public function normalise($source);
+    public function normalize(mixed $source): mixed;
 
     /**
-     * @param $detect
+     * @param mixed $detect
+     * @return void
      */
-    public function setDetect($detect): void;
+    public function setDetect(mixed $detect): void;
 
     /**
-     * @param $found
+     * @param mixed $found
      * @return bool
      */
-    public function isLeaf($found): bool;
+    public function isLeaf(mixed $found): bool;
 
     /**
      * @return mixed
      */
-    public function getDataForFilter();
+    public function getDataForFilter(): mixed;
 
     /**
      * @return mixed
      */
-    public function next();
+    public function next(): mixed;
 
     /**
-     *
+     * @return void
      */
     public function beforeSearch(): void;
+
 }

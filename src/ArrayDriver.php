@@ -6,11 +6,9 @@ namespace Vinograd\Scanner;
 class ArrayDriver implements Driver
 {
 
-    /** @var array */
-    private $dataForFilter;
+    private array|null $dataForFilter = null;
 
-    /** @var array */
-    private $next;
+    private array|null $next = null;
 
     /**
      * @param array $detect
@@ -37,10 +35,9 @@ class ArrayDriver implements Driver
     }
 
     /**
-     * @param array|mixed $source
-     * @return array
+     * @inheritDoc
      */
-    public function normalise($source)
+    public function normalize(mixed $source): array
     {
         if (!is_array($source)) {
             return [$source];
@@ -51,7 +48,7 @@ class ArrayDriver implements Driver
     /**
      * @return array
      */
-    public function getDataForFilter()
+    public function getDataForFilter(): array
     {
         return $this->dataForFilter;
     }
@@ -72,7 +69,7 @@ class ArrayDriver implements Driver
     }
 
     /**
-     *
+     * @return void
      */
     public function beforeSearch(): void
     {
@@ -82,8 +79,9 @@ class ArrayDriver implements Driver
     /**
      * @return array
      */
-    public function next()
+    public function next(): array
     {
         return $this->next;
     }
+
 }

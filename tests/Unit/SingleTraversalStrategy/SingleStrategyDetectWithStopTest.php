@@ -33,7 +33,7 @@ class SingleStrategyDetectWithStopTest extends StrategyCase
     {
         $this->found = $found;
         $verifier = new Verifier();
-        $this->strategy->detect( $array, $this->driver,new DummyNodeFactory(), $verifier, $verifier,$this->provider);
+        $this->strategy->detect( $array, $this->driver,$verifier, $verifier,$this->provider);
     }
 
     public function getCase()
@@ -72,12 +72,12 @@ class SingleStrategyDetectWithStopTest extends StrategyCase
         self::assertTrue(true);
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
         self::assertTrue(true);
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::assertCount(1, $found);
         $key = array_keys($found)[0];
@@ -88,7 +88,7 @@ class SingleStrategyDetectWithStopTest extends StrategyCase
         }
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::assertCount(1, $found);
         $key = array_keys($found)[0];

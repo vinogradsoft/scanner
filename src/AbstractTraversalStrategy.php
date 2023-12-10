@@ -6,24 +6,22 @@ namespace Vinograd\Scanner;
 abstract class AbstractTraversalStrategy
 {
 
-    /** @var bool */
-    protected $stop = false;
+    protected bool $stop = false;
 
     /**
-     * @param mixed $detect
+     * @param mixed $node
      * @param Driver $driver
-     * @param NodeFactory $nodeFactory
      * @param Verifier $leafVerifier
      * @param Verifier $nodeVerifier
      * @param Visitor $visitor
+     * @return void
      */
     abstract public function detect(
-        $detect,
-        Driver $driver,
-        NodeFactory $nodeFactory,
+        mixed    $node,
+        Driver   $driver,
         Verifier $leafVerifier,
         Verifier $nodeVerifier,
-        Visitor $visitor
+        Visitor  $visitor
     ): void;
 
     /**
