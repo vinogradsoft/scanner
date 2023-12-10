@@ -19,13 +19,13 @@ abstract class AbstractChecker implements Checker
     }
 
     /**
-     * @param mixed $node
+     * @param mixed $element
      * @return bool
      */
-    public function can(mixed $node): bool
+    public function can(mixed $element): bool
     {
         if ($this->next !== null) {
-            return $this->next->can($node);
+            return $this->next->can($element);
         }
         return true;
     }

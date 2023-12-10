@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Test\Unit;
 
 use Vinograd\Scanner\Filter;
-use Vinograd\Scanner\Leaf;
 use Vinograd\Scanner\Verifier;
 use PHPUnit\Framework\TestCase;
 
@@ -45,18 +44,26 @@ class VerifierTest extends TestCase
             }
         });
 
-        $coolFile = $this->createStub(Leaf::class);
-        $coolFile->method('getSource')
-            ->willReturn('conftest1.php');
+        $coolFile = new class() {
+            public function getSource()
+            {
+                return 'conftest1.php';
+            }
+        };
 
+        $badFile = new class() {
+            public function getSource()
+            {
+                return 'conftest1.yml';
+            }
+        };
 
-        $badFile = $this->createStub(Leaf::class);
-        $badFile->method('getSource')
-            ->willReturn('conftest1.yml');
-
-        $badFile2 = $this->createStub(Leaf::class);
-        $badFile2->method('getSource')
-            ->willReturn('contest1.yml');
+        $badFile2 = new class() {
+            public function getSource()
+            {
+                return 'contest1.yml';
+            }
+        };
 
         self::assertTrue($verifier->can($coolFile));
         self::assertFalse($verifier->can($badFile));
@@ -85,13 +92,19 @@ class VerifierTest extends TestCase
             }
         });
 
-        $coolFile2 = $this->createStub(Leaf::class);
-        $coolFile2->method('getSource')
-            ->willReturn('conf.php');
+        $coolFile2 = new class() {
+            public function getSource()
+            {
+                return 'conf.php';
+            }
+        };
 
-        $badFile3 = $this->createStub(Leaf::class);
-        $badFile3->method('getSource')
-            ->willReturn('conf.dhp');
+        $badFile3 = new class() {
+            public function getSource()
+            {
+                return 'conf.dhp';
+            }
+        };
 
         self::assertTrue($verifier2->can($coolFile2));
         self::assertFalse($verifier2->can($badFile3));
@@ -104,9 +117,9 @@ class VerifierTest extends TestCase
     public function testAppendCountFilters()
     {
         $verifier = new Verifier();
-        $verifier->append($filter1=$this->getMockForAbstractClass(Filter::class))
-            ->append($filter2=$this->getMockForAbstractClass(Filter::class))
-            ->append($filter3=$this->getMockForAbstractClass(Filter::class));
+        $verifier->append($filter1 = $this->getMockForAbstractClass(Filter::class))
+            ->append($filter2 = $this->getMockForAbstractClass(Filter::class))
+            ->append($filter3 = $this->getMockForAbstractClass(Filter::class));
 
         $leafVerifierObjectValueReflection = new \ReflectionObject($verifier);
         $initialCheckerProperty = $leafVerifierObjectValueReflection->getProperty('initialChecker');

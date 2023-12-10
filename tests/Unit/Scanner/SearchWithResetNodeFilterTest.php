@@ -3,14 +3,12 @@ declare(strict_types=1);
 
 namespace Test\Unit\Scanner;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\BreadthStrategy;
 use Vinograd\Scanner\Filter;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Scanner;
 
 class SearchWithResetNodeFilterTest extends StrategyCase
@@ -34,13 +32,12 @@ class SearchWithResetNodeFilterTest extends StrategyCase
         $scanner->setStrategy($strategy);
         $scanner->setVisitor($provider);
         $scanner->setDriver($driver);
-        $scanner->setNodeFactory(new DummyNodeFactory());
 
         $scanner->addNodeFilter(new class() implements Filter {
 
-            public function filter($found): bool
+            public function filter($element): bool
             {
-                $key = array_keys($found)[0];
+                $key = array_keys($element)[0];
                 if ($key === 'key3') {
                     return false;
                 }
@@ -53,7 +50,7 @@ class SearchWithResetNodeFilterTest extends StrategyCase
             }
         });
         $scanner->resetNodeFilters();
-        $scanner->search($array);
+        $scanner->traverse($array);
 
         self::assertCount($this->leafCounter, $expectedLeaf);
         self::assertCount($this->nodeCounter, $expectedNodes);
@@ -126,18 +123,18 @@ class SearchWithResetNodeFilterTest extends StrategyCase
 
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
 
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         $this->leafCounter++;
         $this->leafLog [] = $found;
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         $this->nodeCounter++;
         $this->nodeLog[] = $found;

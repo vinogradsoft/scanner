@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Test\Unit;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Vinograd\Scanner\ArrayDriver;
 use PHPUnit\Framework\TestCase;
 

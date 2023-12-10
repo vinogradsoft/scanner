@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace Test\Unit\BreadthTraversalStrategy;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\BreadthStrategy;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Verifier;
 
 class BreadthStrategyWithStopTest extends StrategyCase
 {
     private $strategy;
     private $driver;
-    private $factory;
     private $detect;
     private $provider;
 
@@ -24,7 +21,6 @@ class BreadthStrategyWithStopTest extends StrategyCase
     {
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new BreadthStrategy();
-        $this->factory = new DummyNodeFactory();
         $this->driver = new ArrayDriver();
     }
 
@@ -34,7 +30,7 @@ class BreadthStrategyWithStopTest extends StrategyCase
     public function testDetect($array)
     {
         $verifier = new Verifier();
-        $this->strategy->detect($this->detect = $array, $this->driver, $this->factory, $verifier, $verifier, $this->provider);
+        $this->strategy->detect($this->detect = $array, $this->driver, $verifier, $verifier, $this->provider);
     }
 
     public function getCase()
@@ -71,12 +67,12 @@ class BreadthStrategyWithStopTest extends StrategyCase
         self::assertTrue(true);
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
         self::assertTrue(true);
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::assertCount(1, $found);
         $key = array_keys($found)[0];
@@ -87,7 +83,7 @@ class BreadthStrategyWithStopTest extends StrategyCase
         }
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::assertTrue(true);
     }

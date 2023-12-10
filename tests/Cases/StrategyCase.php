@@ -5,7 +5,6 @@ namespace Test\Cases;
 
 use PHPUnit\Framework\TestCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
-use Vinograd\Scanner\NodeFactory;
 
 abstract class StrategyCase extends TestCase
 {
@@ -17,26 +16,26 @@ abstract class StrategyCase extends TestCase
 
     /**
      * @param AbstractTraversalStrategy $scanStrategy
-     * @param NodeFactory $factory
      * @param $detect
+     * @return void
      */
-    abstract public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void;
+    abstract public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void;
 
     /**
      * @param AbstractTraversalStrategy $scanStrategy
-     * @param NodeFactory $factory
      * @param $detect
      * @param $found
-     * @param null $data
+     * @param $data
+     * @return void
      */
-    abstract public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void;
+    abstract public function visitLeaf(AbstractTraversalStrategy $scanStrategy,  $detect, $found, $data = null): void;
 
     /**
      * @param AbstractTraversalStrategy $scanStrategy
-     * @param NodeFactory $factory
      * @param $detect
      * @param $found
-     * @param null $data
+     * @param $data
+     * @return void
      */
-    abstract public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void;
+    abstract public function visitNode(AbstractTraversalStrategy $scanStrategy,  $detect, $found, $data = null): void;
 }

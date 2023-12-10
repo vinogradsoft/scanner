@@ -7,15 +7,9 @@ interface Filter
 {
 
     /**
-     * @param mixed $found
+     * @param mixed $element
      * @return bool
      */
-    public function filter(mixed $found): bool;
-
-    /**
-     * @param mixed $config
-     * @return void
-     */
-    public function setConfiguration(mixed $config): void;
+    public function filter(mixed $element): bool;
 
 }

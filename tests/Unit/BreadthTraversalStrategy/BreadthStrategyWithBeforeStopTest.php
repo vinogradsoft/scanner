@@ -3,13 +3,11 @@ declare(strict_types=1);
 
 namespace Test\Unit\BreadthTraversalStrategy;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
 use Vinograd\Scanner\BreadthStrategy;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\Verifier;
 
 class BreadthStrategyWithBeforeStopTest extends StrategyCase
@@ -43,7 +41,7 @@ class BreadthStrategyWithBeforeStopTest extends StrategyCase
                 ],
                 4
             ],
-        ], $driver, new DummyNodeFactory(), $verifier, $verifier, $provider);
+        ], $driver, $verifier, $verifier, $provider);
 
         self::assertTrue(true);
     }
@@ -54,17 +52,17 @@ class BreadthStrategyWithBeforeStopTest extends StrategyCase
         self::fail();
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
         self::fail();
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::fail();
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::fail();
     }

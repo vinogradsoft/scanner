@@ -13,9 +13,9 @@ interface Checker
     public function append(Checker $checker): Checker;
 
     /**
-     * @param mixed $found
+     * @param mixed $element
      * @return bool
      */
-    public function can(mixed $found): bool;
+    public function can(mixed $element): bool;
 
 }

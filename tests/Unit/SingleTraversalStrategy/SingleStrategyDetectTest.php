@@ -3,12 +3,10 @@ declare(strict_types=1);
 
 namespace Test\Unit\SingleTraversalStrategy;
 
-use Test\Cases\Dummy\DummyNodeFactory;
 use Test\Cases\Dummy\TestCaseProviderVisitor;
 use Test\Cases\StrategyCase;
 use Vinograd\Scanner\AbstractTraversalStrategy;
 use Vinograd\Scanner\ArrayDriver;
-use Vinograd\Scanner\NodeFactory;
 use Vinograd\Scanner\SingleStrategy;
 use Vinograd\Scanner\Verifier;
 
@@ -16,7 +14,6 @@ class SingleStrategyDetectTest extends StrategyCase
 {
     private $strategy;
     private $driver;
-    private $factory;
     private $detect;
     private $array;
     private $except;
@@ -26,7 +23,6 @@ class SingleStrategyDetectTest extends StrategyCase
     {
         $this->provider = new TestCaseProviderVisitor($this);
         $this->strategy = new SingleStrategy();
-        $this->factory = new DummyNodeFactory();
         $this->driver = new ArrayDriver();
     }
 
@@ -38,7 +34,7 @@ class SingleStrategyDetectTest extends StrategyCase
         $this->array = $array;
         $this->except = $except;
         $verifier = new Verifier();
-        $this->strategy->detect($this->detect = $array, $this->driver, $this->factory, $verifier, $verifier, $this->provider);
+        $this->strategy->detect($this->detect = $array, $this->driver, $verifier, $verifier, $this->provider);
     }
 
     public function getCase()
@@ -131,13 +127,13 @@ class SingleStrategyDetectTest extends StrategyCase
         self::assertEquals($this->strategy, $scanStrategy);
     }
 
-    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect): void
+    public function scanCompleted(AbstractTraversalStrategy $scanStrategy, $detect): void
     {
         self::assertEmpty($this->except['node']);
         self::assertEmpty($this->except['leaf']);
     }
 
-    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitLeaf(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::assertCount(1, $found);
         $key = array_keys($found)[0];
@@ -150,7 +146,7 @@ class SingleStrategyDetectTest extends StrategyCase
         }
     }
 
-    public function visitNode(AbstractTraversalStrategy $scanStrategy, NodeFactory $factory, $detect, $found, $data = null): void
+    public function visitNode(AbstractTraversalStrategy $scanStrategy, $detect, $found, $data = null): void
     {
         self::assertCount(1, $found);
         $key = array_keys($found)[0];

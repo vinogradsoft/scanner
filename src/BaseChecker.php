@@ -17,12 +17,12 @@ class BaseChecker extends AbstractChecker
     }
 
     /**
-     * @param mixed $node
+     * @param mixed $element
      * @return bool
      */
-    public function can(mixed $node): bool
+    public function can(mixed $element): bool
     {
-        return $this->filter->filter($node) ? parent::can($node) : false;
+        return $this->filter->filter($element) ? parent::can($element) : false;
     }
 
 }
